@@ -10,7 +10,7 @@ database, image, checkpoint, backup, or third-party ONNX weight.
 
 ```powershell
 git init -b main
-git config user.name "雨筠"
+git config user.name "Yujun8Q"
 git config user.email "142278530+Yujun8Q@users.noreply.github.com"
 git add .
 git status --short
