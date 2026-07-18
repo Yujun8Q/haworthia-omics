@@ -599,8 +599,8 @@ elif mode == "数据导入与清洗":
 
     col1, col2 = st.columns(2)
     with col1:
-        species = st.text_input("物种 (Species)", "Haworthia obtusa")
-        variant = st.text_input("变种/园艺名 (Variant/Cultivar)", "紫肌玉露")
+        species = st.text_input("物种 (Species)")
+        variant = st.text_input("变种 (Variant/Cultivar)")
         uploaded_files = st.file_uploader(
             "批量上传表型影像",
             accept_multiple_files=True,

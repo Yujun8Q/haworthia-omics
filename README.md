@@ -132,7 +132,7 @@ python scripts/build_release_bundle.py --version 0.1.0
 
 ## 许可证与联系
 
-Copyright 2026 雨筠（GitHub: [Yujun8Q](https://github.com/Yujun8Q)）。
+Copyright 2026 Yujun（GitHub: [Yujun8Q](https://github.com/Yujun8Q)）。
 
 软件和项目文档采用 [Apache License 2.0](LICENSE)，署名信息见 [NOTICE](NOTICE)。该许可证
 允许使用、修改、商用和再分发，但必须遵守许可证和 NOTICE 要求。它不覆盖用户图片、数据库、
