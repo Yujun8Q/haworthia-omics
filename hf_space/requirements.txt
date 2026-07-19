@@ -1,0 +1,11 @@
+gradio>=6.0,<7
+huggingface-hub>=0.27,<2
+matplotlib>=3.9,<4
+networkx>=3.3,<4
+numpy>=2.0,<3
+onnxruntime>=1.20,<2
+pandas>=2.2,<4
+Pillow>=11,<13
+plotly>=5.24,<7
+scikit-learn>=1.9,<2
+scipy>=1.14,<2

@@ -1,0 +1,12 @@
+*.ckpt
+*.db
+*.env
+*.onnx
+*.pt
+*.pth
+__pycache__/
+.git/
+.hf_cache/
+local_images/
+backups/
+hf_private_assets/

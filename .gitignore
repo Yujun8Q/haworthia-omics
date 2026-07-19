@@ -20,6 +20,8 @@ MODEL_MANIFEST.json
 *.log
 apppp.py
 dist/
+hf_private_assets/
+hf_space_bundle/
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -30,9 +32,13 @@ htmlcov/
 
 # Virtual environments and editors
 .venv/
+.hf_test_env/
 venv/
 env/
 .idea/
+
+# Hosted-app secrets must only be configured in the hosting dashboard.
+**/.streamlit/secrets.toml
 .vscode/
 .agents/
 

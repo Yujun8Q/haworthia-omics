@@ -1,4 +1,5 @@
 import importlib.util
+import gc
 import os
 import threading
 from pathlib import Path
@@ -15,11 +16,10 @@ class SegmentationEngine:
         self.model_dir = Path(
             os.path.expanduser(os.getenv("U2NET_HOME", "~/.u2net"))
         )
-        self.available = (
-            importlib.util.find_spec("onnxruntime") is not None
-            and (self.model_dir / "isnet-general-use.onnx").exists()
-            and (self.model_dir / "u2net.onnx").exists()
-        )
+        self.available = importlib.util.find_spec("onnxruntime") is not None
+        self.low_memory = os.getenv(
+            "HAWORTHIA_LOW_MEMORY_SEGMENTATION", ""
+        ).strip().lower() in {"1", "true", "yes", "on"}
         self._ort = None
         self._sessions = {}
         self._lock = threading.RLock()
@@ -57,6 +57,11 @@ class SegmentationEngine:
                     )
         return self._sessions[model_name]
 
+    def _release_session(self, model_name):
+        with self._lock:
+            self._sessions.pop(model_name, None)
+        gc.collect()
+
     def _predict_alpha(self, image, model_name):
         session = self._get_session(model_name)
         if model_name == "isnet-general-use":
@@ -76,7 +81,12 @@ class SegmentationEngine:
         array = (array - mean) / std
         model_input = np.expand_dims(array.transpose(2, 0, 1), 0).astype(np.float32)
         input_name = session.get_inputs()[0].name
-        prediction = session.run(None, {input_name: model_input})[0][:, 0, :, :]
+        try:
+            prediction = session.run(None, {input_name: model_input})[0][:, 0, :, :]
+        finally:
+            if self.low_memory:
+                self._release_session(model_name)
+                del session
         minimum = float(prediction.min())
         maximum = float(prediction.max())
         prediction = (prediction - minimum) / max(maximum - minimum, 1e-6)
