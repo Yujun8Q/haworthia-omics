@@ -47,11 +47,27 @@ st.markdown(
     """
 <style>
     .block-container {max-width: 1380px; padding-top: 1.7rem;}
-    .main-notice {border-left: 3px solid #56705e; padding: .2rem 0 .2rem .9rem;
-                  color: #46514a; margin-bottom: 1.1rem;}
+    .project-strip {display: flex; align-items: center; justify-content: space-between;
+                    gap: 1.4rem; border: 1px solid #d9dfdb; border-left: 4px solid #4f6b59;
+                    border-radius: 6px; padding: .9rem 1rem; margin: .2rem 0 1rem;
+                    background: #f7f9f7;}
+    .project-copy {min-width: 0;}
+    .project-author {font-size: 1.05rem; font-weight: 700; color: #26352c; margin-bottom: .2rem;}
+    .project-summary {color: #4f5d54; line-height: 1.55;}
+    .project-actions {flex: 0 0 auto; text-align: right;}
+    .github-link {display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .72rem;
+                  border-radius: 5px; background: #24292f; color: #ffffff !important;
+                  font-weight: 650; text-decoration: none !important; white-space: nowrap;}
+    .github-link:hover {background: #3a4149;}
+    .star-note {margin-top: .42rem; color: #48564d; font-size: .88rem; white-space: nowrap;}
     [data-testid="stFileUploader"] {min-height: 118px;}
     [data-testid="stExpander"] summary {font-weight: 600;}
     .small-note {color: #626b65; font-size: .9rem;}
+    @media (max-width: 700px) {
+        .project-strip {align-items: flex-start; flex-direction: column; gap: .75rem;}
+        .project-actions {text-align: left; width: 100%;}
+        .star-note {white-space: normal;}
+    }
 </style>
 """,
     unsafe_allow_html=True,
@@ -289,8 +305,33 @@ def render_tree(service):
 
 st.title("Haworthia OMICS")
 st.markdown(
-    '<div class="main-notice">面向瓦苇属植物表型研究的只读模型演示。结果表示当前模型中的表型相似性，'
-    "模型很可能出错，不构成权威鉴定、遗传亲缘、杂交或演化关系结论，也不得作为科研或实际决策的决定性依据。</div>",
+    """
+<div class="project-strip">
+  <div class="project-copy">
+    <div class="project-author">雨筠 YujunCC</div>
+    <div class="project-summary">
+      这是 Haworthia OMICS 的在线只读 Demo。完整源代码、安装与训练功能均在 GitHub；
+      用户可以在本地导入自己的图片，从头训练或继续增量训练。
+    </div>
+  </div>
+  <div class="project-actions">
+    <a class="github-link" href="https://github.com/YujunCC/haworthia-omics"
+       target="_blank" rel="noopener noreferrer" aria-label="打开 Haworthia OMICS GitHub 项目">
+      <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true">
+        <path d="M8 0C3.58 0 0 3.64 0 8.13c0 3.59 2.29 6.64 5.47 7.71.4.08.55-.17.55-.39
+        0-.19-.01-.83-.01-1.5-2.01.38-2.53-.5-2.69-.96-.09-.24-.48-.97-.82-1.16-.28-.15-.68-.53-.01-.54
+        .63-.01 1.08.59 1.23.83.72 1.23 1.87.88 2.33.67.07-.53.28-.88.51-1.08-1.78-.21-3.64-.91-3.64-4.02
+        0-.89.31-1.62.82-2.19-.08-.21-.36-1.04.08-2.16 0 0 .67-.22 2.2.84A7.49 7.49 0 0 1 8 3.75
+        c.68 0 1.36.09 2 .27 1.53-1.06 2.2-.84 2.2-.84.44 1.12.16 1.95.08 2.16.51.57.82 1.3.82 2.19
+        0 3.12-1.87 3.81-3.65 4.02.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .22.15.47.55.39
+        A8.04 8.04 0 0 0 16 8.13C16 3.64 12.42 0 8 0Z"/>
+      </svg>
+      <span>查看 GitHub 项目</span>
+    </a>
+    <div class="star-note">觉得有用的话，麻烦为我的项目点个 Star 喵。</div>
+  </div>
+</div>
+""",
     unsafe_allow_html=True,
 )
 
@@ -301,7 +342,7 @@ except Exception:
     st.stop()
 
 st.caption(
-    f"已加载 {len(SERVICE.tax_ids)} 个类群的数值原型。模型权重和原型库不在公开 GitHub 仓库中分发。"
+    f"当前托管模型已加载 {len(SERVICE.tax_ids)} 个类群的数值原型。"
 )
 render_usage_notice()
 
@@ -321,9 +362,7 @@ st.divider()
 st.markdown(
     """
 <div class="small-note">
-本 Demo 仅用于学术研究、教育和个人学习。应用不会将上传图片用于训练，也不会写入项目数据库；
-托管平台可能在处理期间产生短期临时缓存。未经授权的模型提取或再分发不受项目维护者认可。<br><br>
-<a href="https://github.com/YujunCC/haworthia-omics">GitHub 源代码</a> ·
+上传图片不会用于训练，也不会写入项目数据库；托管平台可能在处理期间产生短期临时缓存。<br><br>
 <a href="https://github.com/YujunCC/haworthia-omics/issues">问题与权利通知</a>
 </div>
 """,
